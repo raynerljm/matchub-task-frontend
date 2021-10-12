@@ -1,6 +1,7 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import ButtonRow from "./ButtonRow";
 import { State } from "../interfaces";
+import { motion } from "framer-motion";
 
 type Props = {
   step: number;
@@ -19,7 +20,11 @@ const SubmitCard: FC<Props> = ({
 }) => {
   return (
     <>
-      <div className="question-card">
+      <motion.div
+        className="question-card"
+        initial={{ opacity: 0.4 }}
+        animate={{ opacity: 1 }}
+      >
         {state === null ? (
           <>
             <h1 className="mt-8 text-3xl text-center question-title md:text-4xl">
@@ -47,7 +52,7 @@ const SubmitCard: FC<Props> = ({
         ) : (
           <div />
         )}
-      </div>
+      </motion.div>
     </>
   );
 };

@@ -11,10 +11,39 @@ type Props = {
 };
 
 const ResultsCard: FC<Props> = ({ key, name, questions, choices, answers }) => {
+  const deleteAnswer = async (answerId: number): Promise<void> => {
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_DJANGO_API}/answers/${answerId}/`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  };
+
+  const deleteAnswers = (): void => {
+    answers
+      .filter((answer) => answer.name === name)
+      .forEach((answer) => deleteAnswer(answer.id));
+    setTimeout(() => window.location.reload(), 500);
+  };
+
   return (
     <>
       <div key={key} className="mb-8">
-        <h1 className="mb-2 text-3xl text-match-900">{name}: </h1>
+        <div className="flex items-center w-full">
+          <h1 className="mb-2 text-3xl text-match-900">{name}: </h1>
+          <a
+            className="ml-auto underline cursor-pointer text-accent"
+            onClick={deleteAnswers}
+          >
+            Delete
+          </a>
+        </div>
         {questions
           .filter((question) => question.questionId !== 1)
           .map((question) => {

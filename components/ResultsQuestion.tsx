@@ -30,25 +30,29 @@ const ResultsQuestion: FC<Props> = ({ question, answers, choices }) => {
       <h2 className="underline md:text-lg">{question.question}</h2>
       {question.questionType === "checkbox" ? (
         <ul className="ml-6">
-          {results.map((result) => {
-            return (
-              <li key={result} className="list-disc">
-                {result}
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <ul className="ml-6">
-          {choices
-            .filter((choice) => choice.choiceId === answers[0].choiceId)
-            .map((choice) => {
+          {results &&
+            results.length >= 1 &&
+            results.map((result) => {
               return (
-                <li key={choice.label} className="list-disc">
-                  {choice.label}
+                <li key={result} className="list-disc">
+                  {result}
                 </li>
               );
             })}
+        </ul>
+      ) : (
+        <ul className="ml-6">
+          {answers &&
+            answers.length >= 1 &&
+            choices
+              .filter((choice) => choice.choiceId === answers[0].choiceId)
+              .map((choice) => {
+                return (
+                  <li key={choice.label} className="list-disc">
+                    {choice.label}
+                  </li>
+                );
+              })}
         </ul>
       )}
     </div>

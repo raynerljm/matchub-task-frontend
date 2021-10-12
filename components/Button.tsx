@@ -5,6 +5,7 @@ type Props = {
   href?: string;
   onClick?: () => void;
   type?: "submit";
+  disabled?: boolean;
   style?: "outline" | "fill";
   className?: string;
 };
@@ -13,6 +14,7 @@ const Button: FC<Props> = ({
   href,
   onClick,
   type,
+  disabled,
   style,
   className,
   children,
@@ -20,7 +22,9 @@ const Button: FC<Props> = ({
   const withoutLink: JSX.Element = (
     <button
       className={`${
-        style === "fill" || !style
+        disabled
+          ? "bg-gray-400 text-match-900 cursor-default hover:bg-gray-400 hover:text-match-900"
+          : style === "fill" || !style
           ? "bg-accent text-match-900 hover:bg-match-800 hover:text-match-100"
           : "text-match-100 bg-match-800 hover:bg-accent hover:text-match-900"
       } transition-all duration-300 ease-in-out shadow-lg ${className}`}
@@ -32,6 +36,7 @@ const Button: FC<Props> = ({
             }
       }
       type={type ? type : "button"}
+      disabled={disabled}
     >
       {children}
     </button>

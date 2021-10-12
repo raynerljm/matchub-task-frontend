@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { Dispatch, FC, SetStateAction } from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { FormikConfig, useFormik } from "formik";
-import { Question, Choice } from "../interfaces";
+import { Question, Choice, Answer } from "../interfaces";
 import ButtonRow from "./ButtonRow";
 
 type Props = {
@@ -12,6 +18,7 @@ type Props = {
   maxStep: number;
   selected: any;
   setSelected: Dispatch<SetStateAction<any>>;
+  isNameQuestion: boolean;
 };
 
 const TextboxQuestion: FC<Props> = ({
@@ -21,8 +28,11 @@ const TextboxQuestion: FC<Props> = ({
   maxStep,
   selected,
   setSelected,
+  isNameQuestion,
 }) => {
   const initialValues: FormikConfig<any>["initialValues"] = {};
+  const [answerers, setAnswerers] = useState<string[]>([]);
+  const [validName, setValidName] = useState(true);
 
   initialValues[question.questionId.toString()] = "";
 
@@ -32,6 +42,27 @@ const TextboxQuestion: FC<Props> = ({
       setSelected({ ...selected, ...values });
     },
   });
+
+  const getAnswerers = async (): Promise<void> => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DJANGO_API}/answers/`);
+    const data = await res.json();
+
+    const names: string[] = [];
+    data.map((answer: Answer) => {
+      const name: string = answer.name;
+      if (!names.includes(name)) {
+        names.push(name);
+      }
+    });
+    setAnswerers(names);
+    console.log(names);
+  };
+
+  useEffect(() => {
+    if (isNameQuestion) {
+      getAnswerers();
+    }
+  }, [isNameQuestion]);
 
   return (
     <>
@@ -48,17 +79,32 @@ const TextboxQuestion: FC<Props> = ({
               type="text"
               id={question.questionId.toString()}
               name={question.questionId.toString()}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                formik.handleChange(e);
+                if (isNameQuestion) {
+                  if (answerers.includes(e.target.value)) {
+                    setValidName(false);
+                  } else {
+                    setValidName(true);
+                  }
+                }
+              }}
               onBlur={formik.handleBlur}
               value={formik.values[question.questionId.toString()]}
               className="question-text"
             />
+            {isNameQuestion && !validName && (
+              <p className="mt-2 ml-2 text-sm font-bold text-red-500">
+                Sorry but this name has been used before
+              </p>
+            )}
           </div>
           <ButtonRow
             question={question}
             step={step}
             setStep={setStep}
             maxStep={maxStep}
+            nextDisabled={!validName}
           />
         </form>
       </div>

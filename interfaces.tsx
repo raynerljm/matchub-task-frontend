@@ -12,6 +12,7 @@ export type Choice = {
 };
 
 export type Answer = {
+  id: number;
   name: string;
   questionId: number;
   choiceId: number;

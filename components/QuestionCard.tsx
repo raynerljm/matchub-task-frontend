@@ -4,6 +4,7 @@ import { Question, Choice } from "../interfaces";
 import CheckboxQuestion from "../components/CheckboxQuestion";
 import RadioQuestion from "../components/RadioQuestion";
 import TextboxQuestion from "../components/TextboxQuestion";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Props = {
   question: Question;
@@ -38,6 +39,7 @@ const QuestionCard: FC<Props> = ({
         maxStep={maxStep}
         selected={selected}
         setSelected={setSelected}
+        isNameQuestion={question.questionId === 1}
       />
     );
   } else if (question.questionType === "checkbox") {
@@ -72,6 +74,17 @@ const QuestionCard: FC<Props> = ({
     questionWithoutBorder = <div></div>;
   }
 
-  return <div className="question-card">{questionWithoutBorder}</div>;
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="question-card"
+        initial={{ opacity: 0.4 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0.4 }}
+      >
+        {questionWithoutBorder}
+      </motion.div>
+    </AnimatePresence>
+  );
 };
 export default QuestionCard;

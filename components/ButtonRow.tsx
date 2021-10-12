@@ -8,6 +8,7 @@ type Props = {
   setStep: Dispatch<SetStateAction<number>>;
   maxStep: number;
   submitChoices?: () => Promise<void>;
+  nextDisabled?: boolean;
 };
 
 const ButtonRow: FC<Props> = ({
@@ -16,6 +17,7 @@ const ButtonRow: FC<Props> = ({
   setStep,
   maxStep,
   submitChoices,
+  nextDisabled,
 }) => {
   return (
     <>
@@ -34,12 +36,15 @@ const ButtonRow: FC<Props> = ({
         {question && question.questionId <= maxStep ? (
           <Button
             type="submit"
-            className="ml-auto question-button hover:bg-accent-600"
+            className={`ml-auto question-button ${
+              nextDisabled ? "" : "hover:bg-accent-600"
+            }`}
             onClick={() => {
               setTimeout(() => {
                 setStep(step + 1);
               }, 10);
             }}
+            disabled={nextDisabled}
           >
             Next
           </Button>
