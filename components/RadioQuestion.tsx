@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, FC, SetStateAction } from "react";
 import { FormikConfig, useFormik } from "formik";
 import Radio from "./Radio";
@@ -23,7 +24,7 @@ const RadioQuestion: FC<Props> = ({
   selected,
   setSelected,
 }) => {
-  let initialValues: FormikConfig<any>["initialValues"] = {};
+  const initialValues: FormikConfig<any>["initialValues"] = {};
 
   initialValues[question.questionId.toString()] = -1;
 

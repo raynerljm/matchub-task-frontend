@@ -13,7 +13,7 @@ const ResultsQuestion: FC<Props> = ({ question, answers, choices }) => {
   useEffect(() => {
     if (question.questionType === "checkbox") {
       answers.forEach((answer) => {
-        for (let choice of choices) {
+        for (const choice of choices) {
           if (
             answer.choiceId === choice.choiceId &&
             !results.includes(choice.label)
@@ -23,7 +23,7 @@ const ResultsQuestion: FC<Props> = ({ question, answers, choices }) => {
         }
       });
     }
-  }, []);
+  }, [answers, choices, question.questionType, results]);
 
   return (
     <div className="mb-2">
@@ -31,7 +31,11 @@ const ResultsQuestion: FC<Props> = ({ question, answers, choices }) => {
       {question.questionType === "checkbox" ? (
         <ul className="ml-6">
           {results.map((result) => {
-            return <li className="list-disc">{result}</li>;
+            return (
+              <li key={result} className="list-disc">
+                {result}
+              </li>
+            );
           })}
         </ul>
       ) : (
@@ -39,7 +43,11 @@ const ResultsQuestion: FC<Props> = ({ question, answers, choices }) => {
           {choices
             .filter((choice) => choice.choiceId === answers[0].choiceId)
             .map((choice) => {
-              return <li className="list-disc">{choice.label}</li>;
+              return (
+                <li key={choice.label} className="list-disc">
+                  {choice.label}
+                </li>
+              );
             })}
         </ul>
       )}

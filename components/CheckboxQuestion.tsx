@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, FC, SetStateAction } from "react";
 import { FormikConfig, useFormik } from "formik";
 import Checkbox from "./Checkbox";
@@ -23,7 +24,7 @@ const CheckboxQuestion: FC<Props> = ({
   selected,
   setSelected,
 }) => {
-  let initialValues: FormikConfig<any>["initialValues"] = {};
+  const initialValues: FormikConfig<any>["initialValues"] = {};
 
   choices.forEach((choice) => {
     initialValues[choice.choiceId.toString()] = false;
@@ -32,8 +33,8 @@ const CheckboxQuestion: FC<Props> = ({
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
-      let results: number[] = [];
-      let toAppend: any = {};
+      const results: number[] = [];
+      const toAppend: any = {};
       Object.keys(values).forEach((key) => {
         if (values[key]) {
           results.push(Number(key));

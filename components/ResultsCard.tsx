@@ -3,28 +3,23 @@ import ResultsQuestion from "./ResultsQuestion";
 import { Answer, Question, Choice } from "../interfaces";
 
 type Props = {
+  key: string;
   name: string;
   questions: Question[];
   choices: Choice[];
   answers: Answer[];
 };
 
-const ResultsCard: FC<Props> = ({
-  name,
-  questions,
-  choices,
-  answers,
-  children,
-}) => {
+const ResultsCard: FC<Props> = ({ key, name, questions, choices, answers }) => {
   return (
     <>
-      <div key={name} className="mb-8">
-        <h1 className="text-3xl text-match-900 mb-2">{name}: </h1>
+      <div key={key} className="mb-8">
+        <h1 className="mb-2 text-3xl text-match-900">{name}: </h1>
         {questions
           .filter((question) => question.questionId !== 1)
           .map((question) => {
             return (
-              <h2>
+              <h2 key={question.questionId}>
                 <ResultsQuestion
                   question={question}
                   choices={choices.filter(

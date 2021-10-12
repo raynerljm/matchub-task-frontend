@@ -15,6 +15,7 @@ const Home: NextPage = () => {
   const [step, setStep] = useState(1);
   const [state, setState] = useState<State>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selected, setSelected] = useState<any>({});
 
   const router = useRouter();
@@ -32,7 +33,7 @@ const Home: NextPage = () => {
       setQuestions(questionData);
       setChoices(choiceData);
       setLoading(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
     }
   };
@@ -46,19 +47,15 @@ const Home: NextPage = () => {
     questionId: number,
     choiceId: number
   ): Promise<void> => {
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_DJANGO_API}/answers/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name,
-          questionId: questionId,
-          choiceId: choiceId,
-        }),
-      });
-    } catch (error: unknown) {
-      throw error;
-    }
+    await fetch(`${process.env.NEXT_PUBLIC_DJANGO_API}/answers/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        questionId: questionId,
+        choiceId: choiceId,
+      }),
+    });
   };
 
   const submitChoices = async (): Promise<void> => {
@@ -67,7 +64,7 @@ const Home: NextPage = () => {
     try {
       let name: string;
       Object.keys(selected).forEach((key) => {
-        const questionId: number = Number(key);
+        const questionId = Number(key);
         const values = selected[key];
 
         if (questionId === 1) {

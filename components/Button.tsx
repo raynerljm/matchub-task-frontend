@@ -24,7 +24,13 @@ const Button: FC<Props> = ({
           ? "bg-accent text-match-900 hover:bg-match-800 hover:text-match-100"
           : "text-match-100 bg-match-800 hover:bg-accent hover:text-match-900"
       } transition-all duration-300 ease-in-out shadow-lg ${className}`}
-      onClick={onClick ? onClick : () => {}}
+      onClick={
+        onClick
+          ? onClick
+          : () => {
+              console.log("");
+            }
+      }
       type={type ? type : "button"}
     >
       {children}

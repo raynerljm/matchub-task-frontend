@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Dispatch, FC, SetStateAction } from "react";
 import { FormikConfig, useFormik } from "formik";
 import { Question, Choice } from "../interfaces";
@@ -15,14 +16,13 @@ type Props = {
 
 const TextboxQuestion: FC<Props> = ({
   question,
-  choices,
   step,
   setStep,
   maxStep,
   selected,
   setSelected,
 }) => {
-  let initialValues: FormikConfig<any>["initialValues"] = {};
+  const initialValues: FormikConfig<any>["initialValues"] = {};
 
   initialValues[question.questionId.toString()] = "";
 

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, FC, SetStateAction } from "react";
 import { Question, Choice } from "../interfaces";
 import CheckboxQuestion from "../components/CheckboxQuestion";
 import RadioQuestion from "../components/RadioQuestion";
 import TextboxQuestion from "../components/TextboxQuestion";
-import Button from "./Button";
 
 type Props = {
   question: Question;

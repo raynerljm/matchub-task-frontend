@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import Button from "./Button";
-import { Question, Choice } from "../interfaces";
+import { Question } from "../interfaces";
 
 type Props = {
   question?: Question;
@@ -19,7 +19,7 @@ const ButtonRow: FC<Props> = ({
 }) => {
   return (
     <>
-      <div className="w-full flex mt-16">
+      <div className="flex w-full mt-16">
         {!question || question.questionId !== 1 ? (
           <Button
             className="question-button hover:bg-match-900 hover:bg-opacity-20"
@@ -34,7 +34,7 @@ const ButtonRow: FC<Props> = ({
         {question && question.questionId <= maxStep ? (
           <Button
             type="submit"
-            className="question-button ml-auto hover:bg-accent-600"
+            className="ml-auto question-button hover:bg-accent-600"
             onClick={() => {
               setTimeout(() => {
                 setStep(step + 1);
@@ -47,7 +47,7 @@ const ButtonRow: FC<Props> = ({
           submitChoices && (
             <Button
               type="submit"
-              className="question-button ml-auto hover:bg-green-600"
+              className="ml-auto question-button hover:bg-green-600"
               onClick={submitChoices}
             >
               Submit

@@ -3,10 +3,10 @@ import { FC } from "react";
 const Body: FC = ({ children }) => {
   return (
     <>
-      <div className="w-screen flex min-h-screen bg-match-gradient">
-        <div className="max-w-7xl px-4 mx-auto w-full h-screen grid place-items-center">
+      <div className="flex w-screen min-h-screen bg-match-gradient">
+        <div className="w-full h-screen px-4 mx-auto max-w-7xl grid place-items-center">
           {children}
-          <p className="absolute bottom-3 left-3 text-sm md:text-xl">
+          <p className="absolute text-sm bottom-3 left-3 md:text-xl">
             By{" "}
             <a
               href="https://www.linkedin.com/in/raypuff/"

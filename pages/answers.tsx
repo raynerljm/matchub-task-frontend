@@ -32,18 +32,18 @@ const Answers: NextPage = () => {
       setChoices(choiceData);
       setAnswers(answerData);
 
-      let names: string[] = [];
+      const names: string[] = [];
       answerData.map((answer: Answer) => {
-        let name: string = answer.name;
+        const name: string = answer.name;
         if (!names.includes(name)) {
           names.push(name);
         }
       });
-      names.sort((a, b) => a - b);
+      names.sort((a, b) => ("" + a).localeCompare(b));
       setAnswersByUsers(names);
 
       setLoading(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
     }
   };
@@ -61,13 +61,14 @@ const Answers: NextPage = () => {
       <HomeButton />
       <Loading />
       <Body>
-        <div className="question-card max-h-[80vh] overflow-y-scroll">
-          <h1 className="text-match-900 text-3xl md:text-5xl font-bold mb-8">
+        <div className="overflow-y-scroll question-card max-h-[80vh]">
+          <h1 className="mb-8 text-3xl font-bold text-match-900 md:text-5xl">
             Answers
           </h1>
           {answersByUsers.map((name) => {
             return (
               <ResultsCard
+                key={name}
                 name={name}
                 questions={questions.sort(
                   (a, b) => a.questionId - b.questionId
