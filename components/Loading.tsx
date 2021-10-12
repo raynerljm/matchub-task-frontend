@@ -13,8 +13,8 @@ const Loading: FC = () => {
   return (
     <motion.div
       className="absolute z-20 w-screen h-screen shadow-lg bg-match-gradient grid place-items-center"
-      animate={{ y: "-100%" }}
-      transition={{ duration: 1 }}
+      animate={{ opacity: 0, y: "-100%" }}
+      transition={{ duration: 0.8 }}
     >
       <h1 className="text-3xl font-black text-match-900">Loading...</h1>
     </motion.div>
