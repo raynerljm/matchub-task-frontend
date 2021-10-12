@@ -10,7 +10,10 @@ type Props = {
 
 const Checkbox: FC<Props> = ({ choice, formik, className }) => {
   return (
-    <div className={`${className}`} key={choice.choiceId}>
+    <div
+      className={`${className} flex items-center gap-2`}
+      key={choice.choiceId}
+    >
       <input
         id={choice.choiceId.toString()}
         name={choice.choiceId.toString()}
@@ -18,8 +21,11 @@ const Checkbox: FC<Props> = ({ choice, formik, className }) => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         checked={formik.values[choice.choiceId.toString()]}
+        className="question-checkbox"
       />
-      <label htmlFor={choice.choiceId.toString()}>{choice.choice}</label>
+      <label htmlFor={choice.choiceId.toString()} className="question-label">
+        {choice.label}
+      </label>
     </div>
   );
 };

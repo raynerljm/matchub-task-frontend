@@ -3,16 +3,18 @@ import { FormikProps } from "formik";
 import { Choice } from "../interfaces";
 
 type Props = {
-  key: number;
   name: string;
   choice: Choice;
   formik: FormikProps<any>;
   className?: string;
 };
 
-const Radio: FC<Props> = ({ key, name, choice, formik, className }) => {
+const Radio: FC<Props> = ({ name, choice, formik, className }) => {
   return (
-    <div className={`${className}`} key={key}>
+    <div
+      className={`${className} flex items-center gap-2`}
+      key={choice.choiceId}
+    >
       <input
         id={choice.choiceId.toString()}
         name={name}
@@ -20,8 +22,11 @@ const Radio: FC<Props> = ({ key, name, choice, formik, className }) => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={choice.choiceId}
+        className="question-radio"
       />
-      <label htmlFor={choice.choiceId.toString()}>{choice.choice}</label>
+      <label htmlFor={choice.choiceId.toString()} className="question-label">
+        {choice.label}
+      </label>
     </div>
   );
 };

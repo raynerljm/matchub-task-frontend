@@ -8,4 +8,13 @@ export type Choice = {
   choiceId: number;
   questionId: number;
   choice: string;
+  label: string;
 };
+
+export type Answer = {
+  name: string;
+  questionId: number;
+  choiceId: number;
+};
+
+export type State = null | "submitting" | "failed" | "submitted";

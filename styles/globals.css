@@ -3,5 +3,39 @@
 @tailwind utilities;
 
 body {
-  @apply font-poppins;
+  @apply font-poppins overflow-x-hidden;
+}
+
+@layer components {
+  .bg-match-gradient {
+    background: linear-gradient(90deg, #6ec0e4 0%, #7cade0 100%);
+  }
+
+  .question-card {
+    @apply bg-match-50 p-8 max-w-lg w-full rounded-3xl shadow-xl;
+  }
+
+  .question-title {
+    @apply text-2xl md:text-3xl text-match-900 font-bold mb-8;
+  }
+
+  .question-button {
+    @apply text-lg px-4 py-2 md:text-xl md:px-6 md:py-3 rounded-full uppercase font-bold;
+  }
+
+  .question-text {
+    @apply w-full px-4 py-2 md:px-6 md:py-3 rounded-full text-xl md:text-2xl font-bold focus:ring-match focus:border-match focus:border-4;
+  }
+
+  .question-label {
+    @apply text-xl md:text-2xl text-match-900;
+  }
+
+  .question-checkbox {
+    @apply text-match p-3 rounded-md focus:ring-match focus:ring-4;
+  }
+
+  .question-radio {
+    @apply text-match p-3 rounded-full focus:ring-match focus:ring-4;
+  }
 }

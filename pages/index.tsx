@@ -1,81 +1,44 @@
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";
-import Loading, { StaticLoading } from "../components/Loading";
+import { motion } from "framer-motion";
 import Body from "../components/Body";
-import { Question, Choice } from "../interfaces";
-import CheckboxQuestion from "../components/CheckboxQuestion";
-import RadioQuestion from "../components/RadioQuestion";
-import TextboxQuestion from "../components/TextboxQuestion";
+import Button from "../components/Button";
 
-const Home: NextPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [choices, setChoices] = useState<Choice[]>([]);
-
-  const getQuestionsAndChoices = async (): Promise<void> => {
-    try {
-      const questionRes = await fetch(
-        `${process.env.NEXT_PUBLIC_DJANGO_API}/questions/`
-      );
-      const questionData = await questionRes.json();
-      const choiceRes = await fetch(
-        `${process.env.NEXT_PUBLIC_DJANGO_API}/choices/`
-      );
-      const choiceData = await choiceRes.json();
-      setQuestions(questionData);
-      setChoices(choiceData);
-      setLoading(false);
-    } catch (error: any) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getQuestionsAndChoices();
-  }, []);
-
-  if (loading) {
-    return <StaticLoading />;
-  }
+const index: NextPage = () => {
   return (
     <>
-      <Loading />
       <Body>
-        {questions
-          .sort((a, b) => a.questionId - b.questionId)
-          .map((question) => {
-            if (question.questionType === "textbox") {
-              return (
-                <TextboxQuestion
-                  question={question}
-                  choices={choices.filter(
-                    (choice) => choice.questionId === question.questionId
-                  )}
-                />
-              );
-            } else if (question.questionType === "checkbox") {
-              return (
-                <CheckboxQuestion
-                  question={question}
-                  choices={choices.filter(
-                    (choice) => choice.questionId === question.questionId
-                  )}
-                />
-              );
-            } else if (question.questionType === "radio") {
-              return (
-                <RadioQuestion
-                  question={question}
-                  choices={choices.filter(
-                    (choice) => choice.questionId === question.questionId
-                  )}
-                />
-              );
-            }
-          })}
+        <motion.div
+          className="flex flex-col justify-center items-center"
+          initial={{ opacity: 0, y: "5%" }}
+          animate={{ opacity: 1, y: "0%" }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-2xl md:text-3xl text-match-900 font-black text-center leading-loose">
+            <span>
+              Welcome to
+              <br />
+            </span>
+            <span className="text-4xl md:text-7xl text-match-900">
+              Matchub
+              <br />
+              Questionnaire
+            </span>
+          </h1>
+          <Button
+            className="uppercase font-bold px-8 py-5 md:text-xl md:px-14 md:py-7 rounded-full mt-8"
+            href="/questionnaire"
+          >
+            Start The Quiz
+          </Button>
+          <Button
+            className="uppercase font-bold px-8 py-5 md:text-xl md:px-14 md:py-7 rounded-full mt-8"
+            href="/answers"
+          >
+            View Answers
+          </Button>
+        </motion.div>
       </Body>
     </>
   );
 };
-
-export default Home;
+export default index;
